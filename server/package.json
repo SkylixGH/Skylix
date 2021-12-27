@@ -1,0 +1,17 @@
+{
+  "name": "@skylixgh/skylix-server",
+  "version": "1.0.0-dev",
+  "description": "",
+  "main": "src/_main.js",
+  "scripts": {
+    "start": "node src/_main.js"
+  },
+  "author": "Skylix",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "ts-node": "^10.4.0"
+  }
+}
