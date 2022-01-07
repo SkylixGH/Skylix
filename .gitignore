@@ -109,3 +109,6 @@ dist
 
 # Distros
 **/dist
+
+# Server Private Config
+server/app.config.ts

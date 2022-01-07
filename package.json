@@ -1,22 +1,22 @@
 {
-  "name": "skylix",
-  "version": "1.0.0-dev",
-  "description": "The Skylix full-stack application",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SkylixGH/Skylix.git"
-  },
-  "author": "Skylix",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SkylixGH/Skylix/issues"
-  },
-  "homepage": "https://github.com/SkylixGH/Skylix#readme",
-  "devDependencies": {
-    "ts-node": "^10.4.0",
-    "typescript": "^4.5.4"
-  }
+    "name": "skylix",
+    "version": "1.0.0-dev",
+    "description": "The Skylix full-stack application",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SkylixGH/Skylix.git"
+    },
+    "author": "Skylix",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/SkylixGH/Skylix/issues"
+    },
+    "homepage": "https://github.com/SkylixGH/Skylix#readme",
+    "devDependencies": {
+        "ts-node": "^10.4.0",
+        "typescript": "^4.5.4"
+    }
 }

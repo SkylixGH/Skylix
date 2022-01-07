@@ -1,28 +1,40 @@
 import { terminal, TCPHost, RESTHost } from "@skylixgh/luxjs-server";
 import initRest, { routesRest } from "./rest/init";
+import { MongoClient } from "mongodb";
+import mongoURIBuilder from "mongo-uri-builder";
 
-terminal.info("Starting TCP based API server and REST based API server");
+let db: MongoClient;
 
-const tcp = new TCPHost({
-    port: 1790,
-    host: "0.0.0.0"
-});
+const afterDBReady = () => {
+    terminal.info("Starting TCP based API server and REST based API server");
 
-let rest = new RESTHost({
-    port: 9017,
-    host: "0.0.0.0",
-    routes: {
-        get: [ ...routesRest.get ],
-        post: [ ...routesRest.post ]
-    }
-});
+    const tcp = new TCPHost({
+        port: 1790,
+        host: "0.0.0.0",
+    });
 
-initRest(rest);
+    let rest = new RESTHost({
+        port: 9017,
+        host: "0.0.0.0",
+        routes: {
+            get: [...routesRest.get],
+            post: [...routesRest.post],
+        },
+    });
 
-rest.start().then(() => {
-    terminal.success("REST based API server is ready");
-});
+    initRest(rest);
 
-tcp.start().then(() => {
-    terminal.success("TCP based API server is ready");
-});
+    rest.start().then(() => {
+        terminal.success("REST based API server is ready");
+    });
+
+    tcp.start().then(() => {
+        terminal.success("TCP based API server is ready");
+    });
+};
+
+terminal.info("Connecting to MongoDB Database instance");
+
+db = new MongoClient(mongoURIBuilder({
+    
+}));
