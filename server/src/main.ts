@@ -1,4 +1,4 @@
-import { terminal, TCPHost, RESTHost } from "@skylixgh/reflux-server";
+import { terminal, TCPHost, RESTHost } from "@skylixgh/luxjs-server";
 import initRest from "./rest/init";
 
 terminal.info("Starting TCP based API server and REST based API server");

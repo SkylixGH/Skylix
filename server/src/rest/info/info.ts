@@ -1,4 +1,4 @@
-import { RESTHost } from "@skylixgh/reflux-server";
+import { RESTHost } from "@skylixgh/luxjs-server";
 import pkg from "../../../package.json";
 
 export default function init(rest: RESTHost) {
