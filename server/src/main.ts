@@ -17,6 +17,8 @@ let rest = new RESTHost({
     }
 });
 
+initRest(rest);
+
 rest.start().then(() => {
     terminal.success("REST based API server is ready");
 });
