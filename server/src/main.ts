@@ -2,8 +2,13 @@ import { terminal, TCPHost, RESTHost } from "@skylixgh/luxjs-server";
 import initRest, { routesRest } from "./rest/init";
 import { MongoClient } from "mongodb";
 import mongoURIBuilder from "mongo-uri-builder";
+import config from "../app.config";
 
 let db: MongoClient;
+const failedToStart = () => {
+    terminal.error("Failed to boot this server, please check the debug logs for more info");
+    process.exit();
+}
 
 const afterDBReady = () => {
     terminal.info("Starting TCP based API server and REST based API server");
@@ -35,6 +40,19 @@ const afterDBReady = () => {
 
 terminal.info("Connecting to MongoDB Database instance");
 
-db = new MongoClient(mongoURIBuilder({
-    
+console.log(mongoURIBuilder({
+    ...config.db
 }));
+
+db = new MongoClient(mongoURIBuilder({
+    ...config.db
+}));
+
+db.connect().then(() => {
+    terminal.success("Successfully connected to MongoDB instance");
+    afterDBReady();
+}).catch((error) => {
+    terminal.error(error);
+    terminal.error("Failed to connect to MongoDB server");
+    failedToStart();
+});
