@@ -1,5 +1,5 @@
 import { terminal, TCPHost, RESTHost } from "@skylixgh/luxjs-server";
-import initRest from "./rest/init";
+import initRest, { routesRest } from "./rest/init";
 
 terminal.info("Starting TCP based API server and REST based API server");
 
@@ -12,11 +12,10 @@ let rest = new RESTHost({
     port: 9017,
     host: "0.0.0.0",
     routes: {
-        get: [ "info" ]
+        get: [ ...routesRest.get ],
+        post: [ ...routesRest.post ]
     }
 });
-
-initRest(rest);
 
 rest.start().then(() => {
     terminal.success("REST based API server is ready");
