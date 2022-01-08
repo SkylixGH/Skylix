@@ -1,12 +1,12 @@
-import {terminal, TCPHost, RESTHost} from '@skylixgh/luxjs-server';
-import initRest, {routesRest} from './rest/init';
-import {MongoClient} from 'mongodb';
+import { terminal, TCPHost, RESTHost } from '@skylixgh/luxjs-server';
+import initRest, { routesRest } from './rest/init';
+import { Db, MongoClient } from 'mongodb';
 import mongoURIBuilder from 'mongo-uri-builder';
 import config from '../app.config';
 
 let connectUrl;
 
-if (typeof config.db == 'string') {
+if (typeof config.db === 'string') {
     connectUrl = config.db;
 } else {
     connectUrl = mongoURIBuilder({
@@ -14,11 +14,12 @@ if (typeof config.db == 'string') {
     });
 }
 
-const db = new MongoClient(connectUrl);
+const dbClient = new MongoClient(connectUrl);
+let db: Db;
 
 const failedToStart = () => {
     terminal.error(
-        'Failed to boot this server, please check the debug logs for more info',
+        "Failed to boot this server, please check the debug logs for more info"
     );
     process.exit();
 };
@@ -53,8 +54,10 @@ const afterDBReady = () => {
 
 terminal.info('Connecting to MongoDB Database instance');
 
-db.connect()
+dbClient
+    .connect()
     .then(() => {
+        db = dbClient.db(config.dbName);
         terminal.success('Successfully connected to MongoDB instance');
         afterDBReady();
     })
@@ -64,4 +67,4 @@ db.connect()
         failedToStart();
     });
 
-export {db};
+export { db };

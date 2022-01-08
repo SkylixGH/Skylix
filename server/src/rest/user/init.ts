@@ -10,8 +10,8 @@ export default function init(rest: RESTHost) {
 }
 
 const userRoutes = {
-    get: ['user/login', 'user/create', 'user/resetPassword'],
-    post: [],
+    get: [],
+    post: ['user/login', 'user/create', 'user/resetPassword'],
 };
 
 export {userRoutes};

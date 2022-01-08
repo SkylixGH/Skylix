@@ -13,6 +13,7 @@ export function defineConfig(config: Partial<AppConfig>): AppConfig {
                 host: 'localhost',
                 port: 27017,
             },
+            dbName: 'SkylixDev',
             rest: {
                 port: 9017,
                 host: '0.0.0.0',
@@ -31,6 +32,11 @@ export interface AppConfig {
      * Your DB configuration, use a string for a full connection url
      */
     db: Partial<MongoUriBuilderConfig> | string;
+
+    /**
+     * The name of the database
+     */
+    dbName: string;
 
     /**
      * REST API server's settings
