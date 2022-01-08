@@ -1,9 +1,6 @@
 import { UserInstance } from "@skylixgh/skylix-meta/src/main";
 import { WithId } from "mongodb";
 
-/**
- * A user account controller
- */
 export default class Controller {
     /**
      * The user account instance

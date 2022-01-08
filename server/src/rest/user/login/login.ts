@@ -1,9 +1,7 @@
 import {
     RESTHost,
-    RESTHostConnectionErrors,
-    terminal,
 } from "@skylixgh/luxjs-server";
-import { UserInstance } from "@skylixgh/skylix-meta";
+import { UserInstance, UserLoginErrors, UserLoginRequestForServer } from "@skylixgh/skylix-meta/src/main";
 import { db } from "../../../main";
 import Controller from "./../Controller";
 import { WithId } from "mongodb";
@@ -12,12 +10,23 @@ import { WithId } from "mongodb";
  * Get a user
  * @returns A user controller
  */
-function getUser(): Promise<Controller> {
+function getUser(targetEmailUserName: any): Promise<Controller> {
     return new Promise((resolve, reject) => {
         const userCollection = db.collection("Users");
 
+        let targetName: Partial<UserInstance> = {};
+        if (targetEmailUserName.includes("@")) {
+            targetName["primaryEmail"] == targetEmailUserName;
+        } else {
+            targetName["userName"] == targetEmailUserName;
+        }
+
+        console.log(targetName);
+
         userCollection
-            .findOne<WithId<UserInstance>>()
+            .findOne<WithId<UserInstance>>({
+                ...targetName
+            } as Partial<UserInstance>)
             .then((userDocument) => {
                 resolve(new Controller(userDocument!));
             })
@@ -32,18 +41,16 @@ function getUser(): Promise<Controller> {
  * @param rest REST server
  */
 export default function init(rest: RESTHost) {
-    rest.on("post", (pathName, connection) => {
+    rest.on<UserLoginRequestForServer, any>("post", (pathName, connection) => {
         if (pathName == "user/login") {
-            getUser()
+            console.log(connection.body.userNameEmail)
+            getUser(connection.body)
                 .then((userController) => {
                     connection.sendJSON(userController).catch(() => {});
                 })
                 .catch(() => {
                     connection.sendJSON({
-                        error: {
-                            code: -1,
-                            reason: "Account does not exist",
-                        },
+                        error: UserLoginErrors.accountNotFound
                     });
                 });
         }
