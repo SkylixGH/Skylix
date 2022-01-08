@@ -1,20 +1,21 @@
 {
-  "name": "@skylixgh/skylix-server",
-  "version": "1.0.0-dev",
-  "description": "",
-  "main": "src/_main.js",
-  "scripts": {
-    "start": "node src/_main.js"
-  },
-  "author": "Skylix",
-  "license": "MIT",
-  "devDependencies": {
-    "typescript": "^4.5.4"
-  },
-  "dependencies": {
-    "@skylixgh/luxjs-server": "^1.0.0-dev.1",
-    "mongo-uri-builder": "^4.0.0",
-    "mongodb": "^4.3.0",
-    "ts-node": "^10.4.0"
-  }
+    "name": "@skylixgh/skylix-server",
+    "version": "1.0.0-dev",
+    "description": "",
+    "main": "src/_main.js",
+    "scripts": {
+        "start": "node src/_main.js"
+    },
+    "author": "Skylix",
+    "license": "MIT",
+    "devDependencies": {
+        "typescript": "^4.5.4"
+    },
+    "dependencies": {
+        "@skylixgh/luxjs-server": "^1.0.0-dev.1",
+        "bcrypt": "^5.0.1",
+        "mongo-uri-builder": "^4.0.0",
+        "mongodb": "^4.3.0",
+        "ts-node": "^10.4.0"
+    }
 }

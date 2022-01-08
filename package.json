@@ -16,6 +16,10 @@
     },
     "homepage": "https://github.com/SkylixGH/Skylix#readme",
     "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.9.0",
+        "@typescript-eslint/parser": "^5.9.0",
+        "eslint": "^8.6.0",
+        "eslint-config-google": "^0.14.0",
         "ts-node": "^10.4.0",
         "typescript": "^4.5.4"
     }

@@ -1,33 +1,36 @@
-import { utils } from "@skylixgh/luxjs-server";
-import { MongoUriBuilderConfig } from "mongo-uri-builder";
+import {utils} from '@skylixgh/luxjs-server';
+import {MongoUriBuilderConfig} from 'mongo-uri-builder';
 
 /**
  * Add type declarations to your config
  * @param config Your config
- * @returns Your config
+ * @return Your config
  */
 export function defineConfig(config: Partial<AppConfig>): AppConfig {
-    return utils.mergeObject<AppConfig, Partial<AppConfig>>({
-        db: {
-            host: "localhost",
-            port: 27017
+    return utils.mergeObject<AppConfig, Partial<AppConfig>>(
+        {
+            db: {
+                host: 'localhost',
+                port: 27017,
+            },
+            rest: {
+                port: 9017,
+                host: '0.0.0.0',
+            },
+            tcp: {
+                port: 1790,
+                host: 'localhost',
+            },
         },
-        rest: {
-            port: 9017,
-            host: "0.0.0.0"
-        },
-        tcp: {
-            port: 1790,
-            host: "localhost"
-        } 
-    }, config);
+        config,
+    );
 }
 
 export interface AppConfig {
     /**
-     * Your DB configuration
+     * Your DB configuration, use a string for a full connection url
      */
-    db: Partial<MongoUriBuilderConfig>;
+    db: Partial<MongoUriBuilderConfig> | string;
 
     /**
      * REST API server's settings
@@ -42,7 +45,7 @@ export interface AppConfig {
          * REST API host
          */
         host: string;
-    }
+    };
 
     /**
      * TCP API server's settings
@@ -57,5 +60,5 @@ export interface AppConfig {
          * TCP API host
          */
         host: string;
-    }
+    };
 }
