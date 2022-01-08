@@ -1,12 +1,12 @@
-import { terminal, TCPHost, RESTHost } from '@skylixgh/luxjs-server';
-import initRest, { routesRest } from './rest/init';
-import { Db, MongoClient } from 'mongodb';
-import mongoURIBuilder from 'mongo-uri-builder';
-import config from '../app.config';
+import { terminal, TCPHost, RESTHost } from "@skylixgh/luxjs-server";
+import initRest, { routesRest } from "./rest/init";
+import { Db, MongoClient } from "mongodb";
+import mongoURIBuilder from "mongo-uri-builder";
+import config from "../app.config";
 
 let connectUrl;
 
-if (typeof config.db === 'string') {
+if (typeof config.db === "string") {
     connectUrl = config.db;
 } else {
     connectUrl = mongoURIBuilder({
@@ -25,16 +25,16 @@ const failedToStart = () => {
 };
 
 const afterDBReady = () => {
-    terminal.info('Starting TCP based API server and REST based API server');
+    terminal.info("Starting TCP based API server and REST based API server");
 
     const tcp = new TCPHost({
         port: 1790,
-        host: '0.0.0.0',
+        host: "0.0.0.0",
     });
 
     const rest = new RESTHost({
         port: 9017,
-        host: '0.0.0.0',
+        host: "0.0.0.0",
         routes: {
             get: routesRest.get,
             post: routesRest.post,
@@ -44,26 +44,26 @@ const afterDBReady = () => {
     initRest(rest);
 
     rest.start().then(() => {
-        terminal.success('REST based API server is ready');
+        terminal.success("REST based API server is ready");
     });
 
     tcp.start().then(() => {
-        terminal.success('TCP based API server is ready');
+        terminal.success("TCP based API server is ready");
     });
 };
 
-terminal.info('Connecting to MongoDB Database instance');
+terminal.info("Connecting to MongoDB Database instance");
 
 dbClient
     .connect()
     .then(() => {
         db = dbClient.db(config.dbName);
-        terminal.success('Successfully connected to MongoDB instance');
+        terminal.success("Successfully connected to MongoDB instance");
         afterDBReady();
     })
     .catch((error) => {
         terminal.error(error);
-        terminal.error('Failed to connect to MongoDB server');
+        terminal.error("Failed to connect to MongoDB server");
         failedToStart();
     });
 

@@ -1,9 +1,5 @@
-import {Instance as UserInstance} from './user/instance';
-import { Errors as UserLoginErrors } from './user/login/Errors';
-import UserLoginResult from './user/login/result';
+import { Instance as UserInstance } from "./user/Instance";
+import { Errors as UserLoginErrors } from "./user/login/Errors";
+import UserLoginResult from "./user/login/Result";
 
-export {
-    UserInstance,
-    UserLoginErrors,
-    UserLoginResult,
-};
+export { UserInstance, UserLoginErrors, UserLoginResult };

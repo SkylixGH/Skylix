@@ -5,7 +5,7 @@ import {
 } from "@skylixgh/luxjs-server";
 import { UserInstance } from "@skylixgh/skylix-meta";
 import { db } from "../../../main";
-import Controller from './../Controller';
+import Controller from "./../Controller";
 import { WithId } from "mongodb";
 
 /**

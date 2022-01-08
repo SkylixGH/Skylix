@@ -1,6 +1,6 @@
-import {RESTHost} from '@skylixgh/luxjs-server';
-import info, {infoRoutes} from './info/init';
-import user, {userRoutes} from './user/init';
+import { RESTHost } from "@skylixgh/luxjs-server";
+import info, { infoRoutes } from "./info/init";
+import user, { userRoutes } from "./user/init";
 
 /**
  * Initialize all REST API services
@@ -16,4 +16,4 @@ const routesRest = {
     post: [...infoRoutes.post, ...userRoutes.post],
 };
 
-export {routesRest};
+export { routesRest };

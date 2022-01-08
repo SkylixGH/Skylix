@@ -1,5 +1,5 @@
-import {utils} from '@skylixgh/luxjs-server';
-import {MongoUriBuilderConfig} from 'mongo-uri-builder';
+import { utils } from "@skylixgh/luxjs-server";
+import { MongoUriBuilderConfig } from "mongo-uri-builder";
 
 /**
  * Add type declarations to your config
@@ -10,20 +10,20 @@ export function defineConfig(config: Partial<AppConfig>): AppConfig {
     return utils.mergeObject<AppConfig, Partial<AppConfig>>(
         {
             db: {
-                host: 'localhost',
+                host: "localhost",
                 port: 27017,
             },
-            dbName: 'SkylixDev',
+            dbName: "SkylixDev",
             rest: {
                 port: 9017,
-                host: '0.0.0.0',
+                host: "0.0.0.0",
             },
             tcp: {
                 port: 1790,
-                host: 'localhost',
+                host: "localhost",
             },
         },
-        config,
+        config
     );
 }
 

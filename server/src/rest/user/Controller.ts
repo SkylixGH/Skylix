@@ -1,5 +1,5 @@
-import {UserInstance} from '@skylixgh/skylix-meta/src/main';
-import {WithId} from 'mongodb';
+import { UserInstance } from "@skylixgh/skylix-meta/src/main";
+import { WithId } from "mongodb";
 
 /**
  * A user account controller
