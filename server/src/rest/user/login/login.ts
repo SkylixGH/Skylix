@@ -17,9 +17,9 @@ function getUser(targetEmailUserName: any, password = ""): Promise<Controller> {
 
         let targetName: Partial<UserInstance> = {};
         if (targetEmailUserName.includes("@")) {
-            targetName["primaryEmail"] == targetEmailUserName;
+            targetName = { primaryEmail: targetEmailUserName };
         } else {
-            targetName["userName"] == targetEmailUserName;
+            targetName = { userName: targetEmailUserName };
         }
 
         userCollection
@@ -27,21 +27,29 @@ function getUser(targetEmailUserName: any, password = ""): Promise<Controller> {
                 ...targetName
             } as Partial<UserInstance>)
             .then((userDocument) => {
-                bcrypt.compare(password, userDocument?.passwordToken1!).then((passwordToken1Valid) => {                    
-                    if (passwordToken1Valid) {
-                        bcrypt.compare(password, userDocument?.passwordToken2!).then((passwordToken2Valid) => {
-                            if (passwordToken2Valid) {
-                                resolve(new Controller(userDocument!));
-                                return;
-                            }
+                console.log(userDocument, targetName, targetEmailUserName);
 
-                            reject(UserLoginErrors.invalidPassword);
-                        });
-                        return;
-                    }
-
-                    reject(UserLoginErrors.invalidPassword);
-                });
+                if (userDocument) {
+                    bcrypt.compare(password, userDocument?.passwordToken1!).then((passwordToken1Valid) => {                    
+                        if (passwordToken1Valid) {
+                            bcrypt.compare(password, userDocument?.passwordToken2!).then((passwordToken2Valid) => {
+                                if (passwordToken2Valid) {
+                                    resolve(new Controller(userDocument!));
+                                    return;
+                                }
+    
+                                reject(UserLoginErrors.invalidPassword);
+                            });
+                            return; 
+                        }
+    
+                        reject(UserLoginErrors.invalidPassword); 
+                    });
+ 
+                    return;
+                }
+   
+                reject(UserLoginErrors.accountNotFound); 
             })
             .catch(() => {
                 reject();
