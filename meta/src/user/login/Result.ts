@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export default interface Result {
     /**
      * First token
@@ -12,5 +14,5 @@ export default interface Result {
     /**
      * User ID
      */
-    _id: string;
+    _id: ObjectId;
 }

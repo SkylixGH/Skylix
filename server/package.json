@@ -4,7 +4,8 @@
     "description": "",
     "main": "src/_main.js",
     "scripts": {
-        "start": "node src/_main.js"
+        "start": "node src/_main.js",
+        "dev": "nodemon --watch ../ src/main.ts"
     },
     "author": "Skylix",
     "license": "MIT",
@@ -12,7 +13,7 @@
         "typescript": "^4.5.4"
     },
     "dependencies": {
-        "@skylixgh/luxjs-server": "^1.0.0-dev.2",
+        "@skylixgh/luxjs-server": "^1.0.0-dev.3",
         "@skylixgh/skylix-meta": "file:../meta",
         "bcrypt": "^5.0.1",
         "mongo-uri-builder": "^4.0.0",

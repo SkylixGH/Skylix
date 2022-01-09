@@ -1,7 +1,7 @@
 import {
     RESTHost,
 } from "@skylixgh/luxjs-server";
-import { UserInstance, UserLoginErrors, UserLoginRequestForServer } from "@skylixgh/skylix-meta/src/main";
+import { UserInstance, UserLoginErrors, UserLoginRequestForServer, UserLoginResult } from "@skylixgh/skylix-meta/src/main";
 import { db } from "../../../main";
 import Controller from "./../Controller";
 import { WithId } from "mongodb";
@@ -10,7 +10,7 @@ import { WithId } from "mongodb";
  * Get a user
  * @returns A user controller
  */
-function getUser(targetEmailUserName: any): Promise<Controller> {
+function getUser(targetEmailUserName: any, password: string): Promise<Controller> {
     return new Promise((resolve, reject) => {
         const userCollection = db.collection("Users");
 
@@ -41,18 +41,21 @@ function getUser(targetEmailUserName: any): Promise<Controller> {
  * @param rest REST server
  */
 export default function init(rest: RESTHost) {
-    rest.on<UserLoginRequestForServer, any>("post", (pathName, connection) => {
+    rest.on<UserLoginRequestForServer, any>("post", (pathName, connection) => { 
         if (pathName == "user/login") {
-            console.log(connection.body.userNameEmail)
-            getUser(connection.body)
+            getUser(connection.body.userNameEmail, connection.body.password)
                 .then((userController) => {
-                    connection.sendJSON(userController).catch(() => {});
+                    connection.sendJSON<UserLoginResult>({
+                        token1: userController.user.token1,
+                        token2: userController.user.token2,
+                        _id: userController.user._id
+                    }).catch(() => {});
                 })
                 .catch(() => {
-                    connection.sendJSON({
+                    connection.sendJSON({ 
                         error: UserLoginErrors.accountNotFound
                     });
                 });
-        }
+        } 
     });
-}
+} 

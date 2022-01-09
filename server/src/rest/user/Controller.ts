@@ -15,3 +15,4 @@ export default class Controller {
         this.user = user;
     }
 }
+ 

@@ -10,5 +10,8 @@
     "license": "MIT",
     "devDependencies": {
         "typescript": "^4.5.4"
+    },
+    "dependencies": {
+        "mongodb": "^4.3.0"
     }
 }
