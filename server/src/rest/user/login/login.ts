@@ -5,12 +5,13 @@ import { UserInstance, UserLoginErrors, UserLoginRequestForServer, UserLoginResu
 import { db } from "../../../main";
 import Controller from "./../Controller";
 import { WithId } from "mongodb";
+import bcrypt from "bcrypt";
 
 /**
  * Get a user
  * @returns A user controller
  */
-function getUser(targetEmailUserName: any, password: string): Promise<Controller> {
+function getUser(targetEmailUserName: any, password = ""): Promise<Controller> {
     return new Promise((resolve, reject) => {
         const userCollection = db.collection("Users");
 
@@ -21,14 +22,26 @@ function getUser(targetEmailUserName: any, password: string): Promise<Controller
             targetName["userName"] == targetEmailUserName;
         }
 
-        console.log(targetName);
-
         userCollection
             .findOne<WithId<UserInstance>>({
                 ...targetName
             } as Partial<UserInstance>)
             .then((userDocument) => {
-                resolve(new Controller(userDocument!));
+                bcrypt.compare(password, userDocument?.passwordToken1!).then((passwordToken1Valid) => {                    
+                    if (passwordToken1Valid) {
+                        bcrypt.compare(password, userDocument?.passwordToken2!).then((passwordToken2Valid) => {
+                            if (passwordToken2Valid) {
+                                resolve(new Controller(userDocument!));
+                                return;
+                            }
+
+                            reject(UserLoginErrors.invalidPassword);
+                        });
+                        return;
+                    }
+
+                    reject(UserLoginErrors.invalidPassword);
+                });
             })
             .catch(() => {
                 reject();
@@ -51,9 +64,9 @@ export default function init(rest: RESTHost) {
                         _id: userController.user._id
                     }).catch(() => {});
                 })
-                .catch(() => {
+                .catch((errorCode) => {
                     connection.sendJSON({ 
-                        error: UserLoginErrors.accountNotFound
+                        error: errorCode
                     });
                 });
         } 
