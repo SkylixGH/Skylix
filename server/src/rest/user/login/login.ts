@@ -27,8 +27,6 @@ function getUser(targetEmailUserName: any, password = ""): Promise<Controller> {
                 ...targetName
             } as Partial<UserInstance>)
             .then((userDocument) => {
-                console.log(userDocument, targetName, targetEmailUserName);
-
                 if (userDocument) {
                     bcrypt.compare(password, userDocument?.passwordToken1!).then((passwordToken1Valid) => {                    
                         if (passwordToken1Valid) {

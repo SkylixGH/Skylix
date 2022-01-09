@@ -1,7 +1,7 @@
 {
     "name": "skylix",
     "version": "1.0.0-dev",
-    "description": "The Skylix full-stack application",
+    "description": "Skylix | Binding the world together",
     "scripts": {
         "prettier": "prettier --write .",
         "server:dev": "cd server && npm run dev"
